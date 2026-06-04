@@ -1,0 +1,67 @@
+name: netease_music
+description: "网易云音乐 Flutter 客户端"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 状态管理
+  get: ^4.6.6
+
+  # 网络请求
+  dio: ^5.7.0
+
+  # 本地存储
+  get_storage: ^2.1.1
+
+  # 音频播放
+  just_audio: ^0.9.43
+  audio_session: ^0.1.25
+
+  # 图片缓存
+  cached_network_image: ^3.4.1
+
+  # JSON序列化
+  json_annotation: ^4.9.0
+
+  # 不可变数据类
+  freezed_annotation: ^2.4.4
+
+  # UI组件
+  flutter_svg: ^2.0.16
+  shimmer: ^3.0.0
+  lottie: ^3.3.1
+
+  # 工具
+  intl: ^0.20.2
+  uuid: ^4.5.1
+  logger: ^2.5.0
+  collection: ^1.19.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4
+  freezed: ^2.5.8
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
+
+  # fonts:
+  #   - family: CustomFont
+  #     fonts:
+  #       - asset: assets/fonts/CustomFont-Regular.ttf
+  #       - asset: assets/fonts/CustomFont-Bold.ttf
+  #         weight: 700
