@@ -44,7 +44,7 @@ class HomePage extends GetView<HomeController> {
                 // 推荐电台
                 SliverToBoxAdapter(child: _buildDjPrograms()),
                 // 底部留白
-                const SliverToBoxAdapter(child: SizedBox(height: 200)),
+                const SliverToBoxAdapter(child: SizedBox(height: 160)),
               ],
             ),
           );

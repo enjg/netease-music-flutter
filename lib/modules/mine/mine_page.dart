@@ -99,7 +99,7 @@ class MinePage extends GetView<MineController> {
           _playlistSection('创建的歌单', controller.createdPlaylists),
           // 收藏的歌单
           _playlistSection('收藏的歌单', controller.subscribedPlaylists),
-          const SliverToBoxAdapter(child: SizedBox(height: 200)),
+          const SliverToBoxAdapter(child: SizedBox(height: 160)),
         ]);
       }),
     );

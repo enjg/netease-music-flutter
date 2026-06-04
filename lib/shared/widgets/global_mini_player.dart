@@ -45,9 +45,13 @@ class GlobalMiniPlayer extends StatelessWidget {
                   height: 64,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.65),
+                    color: Colors.black.withOpacity(0.75),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
-                    border: Border.all(color: AppColors.glassBorder, width: 0.5),
+                    border: Border.all(color: Colors.white.withOpacity(0.15), width: 0.5),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 30, offset: const Offset(0, 4)),
+                      BoxShadow(color: Colors.white.withOpacity(0.03), blurRadius: 1, offset: const Offset(0, -1)),
+                    ],
                   ),
                   child: Row(
                     children: [
