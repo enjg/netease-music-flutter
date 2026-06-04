@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
-import '../../config/theme/app_dimensions.dart';
 import '../../shared/widgets/global_tab_bar.dart';
 import '../../shared/widgets/global_mini_player.dart';
 import 'routes.dart';
@@ -54,6 +53,8 @@ class NetEaseMusicApp extends StatelessWidget {
 }
 
 /// 全局浮层包装器
+/// TabBar 和迷你播放器是浮于内容之上的液态玻璃，页面内容全屏延伸，
+/// 各页面内部自行添加底部留白（如 SliverToBoxAdapter + SizedBox）让内容可滚动到浮层后面。
 class _GlobalOverlay extends StatelessWidget {
   final Widget child;
   const _GlobalOverlay({required this.child});
@@ -64,20 +65,8 @@ class _GlobalOverlay extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // 页面内容 - 用 Padding 包裹，通过 Obx 只监听 padding 变化
-          Positioned.fill(
-            child: Obx(() {
-              if (!Get.isRegistered<RouteStateController>()) {
-                return Padding(padding: EdgeInsets.zero, child: child);
-              }
-              final routeState = Get.find<RouteStateController>();
-              final bottomPadding = _calcBottomPadding(context, routeState.config.value);
-              return Padding(
-                padding: EdgeInsets.only(bottom: bottomPadding),
-                child: child,
-              );
-            }),
-          ),
+          // 页面内容 - 全屏延伸，不加底部 padding
+          Positioned.fill(child: child),
           // 迷你播放器
           const GlobalMiniPlayer(),
           // TabBar
@@ -85,12 +74,5 @@ class _GlobalOverlay extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  double _calcBottomPadding(BuildContext context, RouteConfig config) {
-    double padding = MediaQuery.of(context).padding.bottom;
-    if (config.showTabBar) padding += AppDimensions.bottomNavHeight + 6;
-    if (config.showMiniPlayer) padding += 64 + 8;
-    return padding;
   }
 }
