@@ -33,16 +33,22 @@ class GlobalTabBar extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
               child: Container(
                 height: AppDimensions.bottomNavHeight,
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.75),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(0.08),
+                      Colors.black.withOpacity(0.6),
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusXxl),
-                  border: Border.all(color: Colors.white.withOpacity(0.15), width: 0.5),
+                  border: Border.all(color: Colors.white.withOpacity(0.2), width: 0.5),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.6), blurRadius: 40, offset: const Offset(0, -6)),
-                    BoxShadow(color: Colors.white.withOpacity(0.03), blurRadius: 1, offset: const Offset(0, 1)),
+                    BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 40, offset: const Offset(0, -6)),
                   ],
                 ),
                 child: Row(

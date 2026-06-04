@@ -20,7 +20,7 @@ class BannerModel {
     return BannerModel(
       targetId: json['targetId'] ?? 0,
       targetType: json['targetType'] ?? 0,
-      pic: json['pic'] ?? '',
+      pic: json['imageUrl'] ?? json['pic'] ?? json['bigImageUrl'] ?? '',
       typeTitle: json['typeTitle'] ?? '',
       url: json['url'] ?? '',
       titleColor: json['titleColor'] ?? 'blue',
