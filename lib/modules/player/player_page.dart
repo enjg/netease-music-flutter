@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:math';
 import '../../config/theme/app_colors.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
@@ -24,9 +23,9 @@ class PlayerPage extends GetView<PlayerController> {
             // 背景渐变
             Container(
               decoration: const BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment(0, -0.3),
-                  radius: 0.8,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [Color(0xFF1a0a2e), Color(0xFF0a0a0a)],
                 ),
               ),
@@ -119,41 +118,29 @@ class PlayerPage extends GetView<PlayerController> {
   }
 
   Widget _buildVinylDisc(String coverUrl) {
-    return Obx(() {
-      final isPlaying = controller.playerService.isPlaying.value;
-      return TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0, end: isPlaying ? 2 * pi : 0),
-        duration: const Duration(seconds: 20),
-        builder: (_, double angle, __) {
-          return Transform.rotate(
-            angle: angle,
-            child: Container(
-              width: 260, height: 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF1A1A1A),
-                border: Border.all(color: const Color(0xFF333333), width: 2),
-                boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 40, offset: const Offset(0, 10)),
-                ],
-              ),
-              child: Center(
-                child: ClipOval(
-                  child: Container(
-                    width: 160, height: 160,
-                    color: AppColors.surface,
-                    child: coverUrl.isNotEmpty
-                        ? Image.network('$coverUrl?param=320x320', fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(Icons.album, size: 60, color: AppColors.textTertiary))
-                        : const Icon(Icons.album, size: 60, color: AppColors.textTertiary),
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    });
+    return Container(
+      width: 260, height: 260,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color(0xFF1A1A1A),
+        border: Border.all(color: const Color(0xFF333333), width: 2),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 40, offset: const Offset(0, 10)),
+        ],
+      ),
+      child: Center(
+        child: ClipOval(
+          child: Container(
+            width: 160, height: 160,
+            color: AppColors.surface,
+            child: coverUrl.isNotEmpty
+                ? Image.network('$coverUrl?param=320x320', fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Icon(Icons.album, size: 60, color: AppColors.textTertiary))
+                : const Icon(Icons.album, size: 60, color: AppColors.textTertiary),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildProgressBar() {
