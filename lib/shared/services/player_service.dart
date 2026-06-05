@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import '../../data/models/song_model.dart';
@@ -140,8 +141,15 @@ class PlayerService extends GetxService {
 
     final url = await getSongUrl(song.id);
     if (url == null) {
-      // URL 获取失败，尝试跳到下一首
+      // URL 获取失败
       print('[PlayerService] 无法获取歌曲 ${song.id} 的播放地址，跳过');
+      Get.snackbar('播放失败', '歌曲暂无法播放，可能需要登录',
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+        backgroundColor: const Color(0xE6222222),
+        colorText: const Color(0xFFFFFFFF),
+        margin: const EdgeInsets.all(16),
+      );
       if (playlist.length > 1) {
         next();
       }
