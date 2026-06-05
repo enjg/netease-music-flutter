@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/providers/mv_provider.dart';
 
@@ -87,6 +88,22 @@ class MvController extends GetxController {
     try {
       final data = await _provider.getSimilarMv(mvid: mvid!);
       similarMvs.assignAll((data['mvs'] ?? []).cast<Map<String, dynamic>>());
+    } catch (_) {}
+  }
+
+  /// 点赞/取消点赞 MV
+  Future<void> likeMv() async {
+    try {
+      final isLiked = detailInfo.value['liked'] ?? false;
+      await _provider.likeMv(t: isLiked ? 0 : 1, id: mvid!);
+      await loadDetailInfo();
+      Get.showSnackbar(GetSnackBar(
+        message: isLiked ? '已取消点赞' : '已点赞',
+        duration: const Duration(seconds: 1),
+        backgroundColor: const Color(0xE6222222),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+      ));
     } catch (_) {}
   }
 

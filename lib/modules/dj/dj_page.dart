@@ -68,7 +68,7 @@ class DjPage extends GetView<DjController> {
                 Text(title, style: AppTextStyles.h3),
                 const Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed('/dj/list'),
                   child: const Text('查看更多'),
                 ),
               ],

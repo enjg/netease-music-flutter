@@ -223,6 +223,20 @@ class MvProvider {
     return r.data;
   }
 
+  /// 点赞 MV
+  /// t: 0 取消点赞, 1 点赞
+  Future<Map<String, dynamic>> likeMv({
+    required int t,
+    required int id,
+  }) async {
+    final r = await _client.get('/resource/like', queryParameters: {
+      'type': 1,
+      't': t,
+      'id': id,
+    });
+    return r.data;
+  }
+
   /// 将 mlog id 转为 video id
   Future<Map<String, dynamic>> mlogToVideo({required String id}) async {
     final r = await _client.get('/mlog/to/video', queryParameters: {'id': id});

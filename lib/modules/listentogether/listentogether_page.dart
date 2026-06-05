@@ -124,7 +124,7 @@ class ListentogetherPage extends GetView<ListentogetherController> {
       const SizedBox(height: 24),
       // 控制
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        IconButton(icon: const Icon(Icons.skip_previous_rounded, color: AppColors.textSecondary, size: 32), onPressed: () {}),
+        IconButton(icon: const Icon(Icons.skip_previous_rounded, color: AppColors.textSecondary, size: 32), onPressed: () => Get.showSnackbar(GetSnackBar(message: '一起听暂不支持上一首', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
         const SizedBox(width: 32),
         Container(width: 64, height: 64, decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
           child: const Icon(Icons.pause_rounded, size: 36, color: AppColors.background)),

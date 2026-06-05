@@ -84,8 +84,8 @@ class AccountPage extends GetView<AccountController> {
           ]),
           const SizedBox(height: 12),
           _menuGroup([
-            _menuItem(Icons.settings_outlined, '设置', () {}),
-            _menuItem(Icons.help_outline_rounded, '帮助与反馈', () {}),
+            _menuItem(Icons.settings_outlined, '设置', () => Get.showSnackbar(GetSnackBar(message: '设置页面开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
+            _menuItem(Icons.help_outline_rounded, '帮助与反馈', () => Get.showSnackbar(GetSnackBar(message: '帮助与反馈页面开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
           ]),
           if (isLoggedIn) ...[
             const SizedBox(height: 24),

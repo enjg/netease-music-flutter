@@ -8,6 +8,7 @@ import '../../config/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
 import '../../data/providers/song_provider.dart';
 import '../../shared/services/player_service.dart';
+import '../comment/comment_page.dart';
 import 'player_controller.dart';
 
 /// LRC歌词行
@@ -246,7 +247,27 @@ class _PlayerPageState extends State<PlayerPage>
           }),
         ]),
         const Spacer(),
-        _glassBtn(Icons.more_horiz_rounded, 40, () {}),
+        _glassBtn(Icons.more_horiz_rounded, 40, () {
+                  final song = ctrl.playerService.currentSong.value;
+                  if (song == null) return;
+                  Get.bottomSheet(Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF1A1A2E),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                    ),
+                    child: Column(mainAxisSize: MainAxisSize.min, children: [
+                      Container(width: 36, height: 4, decoration: BoxDecoration(
+                        color: Colors.white24, borderRadius: BorderRadius.circular(2))),
+                      const SizedBox(height: 20),
+                      Text(song.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                      const SizedBox(height: 16),
+                      _bottomSheetItem(Icons.playlist_add, '添加到歌单', () { Get.back(); }),
+                      _bottomSheetItem(Icons.person_outline, '查看歌手', () { Get.back(); Get.toNamed('/artist', arguments: {'id': song.artistIds.isNotEmpty ? song.artistIds.first : 0}); }),
+                      _bottomSheetItem(Icons.album_outlined, '查看专辑', () { Get.back(); Get.toNamed('/album', arguments: {'id': int.tryParse(song.albumId) ?? 0}); }),
+                    ]),
+                  ));
+                }),
       ]),
     );
   }
@@ -375,7 +396,21 @@ class _PlayerPageState extends State<PlayerPage>
               maxLines: 1, overflow: TextOverflow.ellipsis)),
           ],
         )),
-        _glassBtn(Icons.favorite_border_rounded, 40, () {}, color: AppColors.textSecondary),
+        _glassBtn(Icons.favorite_border_rounded, 40, () async {
+                        final song = ctrl.playerService.currentSong.value;
+                        if (song == null) return;
+                        try {
+                          final provider = SongProvider();
+                          await provider.like(song.id);
+                          Get.showSnackbar(GetSnackBar(
+                            message: '已添加到喜欢',
+                            duration: const Duration(seconds: 1),
+                            backgroundColor: const Color(0xE6222222),
+                            margin: const EdgeInsets.all(16),
+                            borderRadius: 12,
+                          ));
+                        } catch (_) {}
+                      }, color: AppColors.textSecondary),
       ]),
     ));
   }
@@ -441,7 +476,37 @@ class _PlayerPageState extends State<PlayerPage>
                   child: Icon(p.isPlaying.value ? Icons.pause_rounded : Icons.play_arrow_rounded,
                     size: 28, color: Colors.black))),
               _glassBtn(Icons.skip_next_rounded, 48, ctrl.next),
-              _glassBtn(Icons.queue_music_rounded, 40, () {}, color: AppColors.textSecondary),
+              _glassBtn(Icons.queue_music_rounded, 40, () {
+                      final p = ctrl.playerService;
+                      Get.bottomSheet(Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF1A1A2E),
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                        ),
+                        child: Column(mainAxisSize: MainAxisSize.min, children: [
+                          Container(width: 36, height: 4, decoration: BoxDecoration(
+                            color: Colors.white24, borderRadius: BorderRadius.circular(2))),
+                          const SizedBox(height: 16),
+                          Text('播放队列 (${p.playlist.length}首)', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
+                          const SizedBox(height: 12),
+                          SizedBox(height: 300, child: ListView.builder(
+                            itemCount: p.playlist.length,
+                            itemBuilder: (_, i) {
+                              final s = p.playlist[i];
+                              final isCurrent = i == p.currentIndex.value;
+                              return ListTile(
+                                dense: true,
+                                leading: isCurrent ? const Icon(Icons.equalizer, color: AppColors.accent, size: 18) : null,
+                                title: Text(s.name, style: TextStyle(fontSize: 14, color: isCurrent ? AppColors.accent : Colors.white70)),
+                                subtitle: Text(s.artistText, style: TextStyle(fontSize: 12, color: isCurrent ? AppColors.accent.withOpacity(0.6) : Colors.white38)),
+                                onTap: () { p.playSong(p.playlist[i], list: p.playlist, index: i); Get.back(); },
+                              );
+                            },
+                          )),
+                        ]),
+                      ));
+                    }, color: AppColors.textSecondary),
             ]),
           );
         }),
@@ -463,7 +528,14 @@ class _PlayerPageState extends State<PlayerPage>
   }
 
   Widget _action(IconData icon, String label) {
-    return GestureDetector(onTap: () {},
+    return GestureDetector(onTap: () {
+      if (label == '评论') {
+        final song = Get.find<PlayerService>().currentSong.value;
+        if (song != null) Get.to(() => CommentPage(resourceId: song.id, resourceType: 0));
+      } else {
+        Get.showSnackbar(GetSnackBar(message: '${label}功能开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12));
+      }
+    },
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         Icon(icon, size: 18, color: AppColors.textTertiary),
         const SizedBox(height: 3),
@@ -500,6 +572,21 @@ class _PlayerPageState extends State<PlayerPage>
       case PlayMode.shuffle: return Icons.shuffle_rounded;
       default: return Icons.repeat_rounded;
     }
+  }
+
+  static Widget _bottomSheetItem(IconData icon, String label, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(children: [
+          Icon(icon, size: 20, color: Colors.white70),
+          const SizedBox(width: 16),
+          Text(label, style: const TextStyle(fontSize: 14, color: Colors.white70)),
+        ]),
+      ),
+    );
   }
 }
 

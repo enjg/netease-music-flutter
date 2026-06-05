@@ -22,7 +22,7 @@ class FollowPage extends GetView<FollowController> {
             child: Row(children: [
               const Text('关注', style: AppTextStyles.h1),
               const Spacer(),
-              IconButton(icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.textSecondary), onPressed: () {}),
+              IconButton(icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.textSecondary), onPressed: () => Get.toNamed('/search')),
             ]),
           )),
           if (controller.isLoading.value && controller.events.isEmpty)

@@ -33,7 +33,7 @@ class YunbeiPage extends GetView<YunbeiController> {
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 _button('✨ 签到领云贝', true, () => controller.doSign()),
                 const SizedBox(width: 10),
-                _button('收支明细', false, () {}),
+                _button('收支明细', false, () => Get.showSnackbar(GetSnackBar(message: '收支明细页面开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
               ]),
             ]),
           ),

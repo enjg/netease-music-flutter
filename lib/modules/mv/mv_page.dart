@@ -132,7 +132,7 @@ class MvPage extends GetView<MvController> {
                       icon: info['liked'] == true ? Icons.favorite : Icons.favorite_border,
                       label: '赞',
                       color: info['liked'] == true ? AppColors.accent : AppColors.textSecondary,
-                      onTap: () {},
+                      onTap: () => controller.likeMv(),
                     ),
                     _actionButton(
                       icon: info['subed'] == true ? Icons.bookmark : Icons.bookmark_border,
@@ -143,12 +143,24 @@ class MvPage extends GetView<MvController> {
                     _actionButton(
                       icon: Icons.share_outlined,
                       label: '分享',
-                      onTap: () {},
+                      onTap: () => Get.showSnackbar(GetSnackBar(
+                        message: '分享功能开发中',
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: const Color(0xE6222222),
+                        margin: const EdgeInsets.all(16),
+                        borderRadius: 12,
+                      )),
                     ),
                     _actionButton(
                       icon: Icons.download_outlined,
                       label: '下载',
-                      onTap: () {},
+                      onTap: () => Get.showSnackbar(GetSnackBar(
+                        message: '下载功能开发中',
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: const Color(0xE6222222),
+                        margin: const EdgeInsets.all(16),
+                        borderRadius: 12,
+                      )),
                     ),
                   ],
                 ),
