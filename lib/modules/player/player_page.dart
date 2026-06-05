@@ -143,10 +143,14 @@ class _PlayerPageState extends State<PlayerPage>
     }
     if (idx != _currentLyricIndex && mounted) {
       setState(() => _currentLyricIndex = idx);
-      // 自动滚动到当前歌词
+      // 滚动到当前歌词，使其在歌词区域垂直居中
       if (_lyricScrollCtrl.hasClients) {
-        final target = (idx * 56.0 - 200).clamp(0.0, _lyricScrollCtrl.position.maxScrollExtent);
-        _lyricScrollCtrl.animateTo(target, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        const itemHeight = 50.0; // 大约每行高度
+        final viewportHeight = _lyricScrollCtrl.position.viewportDimension;
+        final target = (idx * itemHeight - viewportHeight / 2 + itemHeight / 2)
+            .clamp(0.0, _lyricScrollCtrl.position.maxScrollExtent);
+        _lyricScrollCtrl.animateTo(target,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
       }
     }
   }
@@ -302,24 +306,30 @@ class _PlayerPageState extends State<PlayerPage>
     }
     return GestureDetector(
       onTap: () => setState(() => _showLyrics = false),
-      child: ListView.builder(
-        controller: _lyricScrollCtrl,
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 80),
-        itemCount: _lyrics.length,
-        itemBuilder: (_, i) {
-          final active = i == _currentLyricIndex;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            child: AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 300),
-              style: TextStyle(
-                fontSize: active ? 22 : 16,
-                fontWeight: active ? FontWeight.w600 : FontWeight.normal,
-                color: active ? Colors.white.withOpacity(0.92) : Colors.white.withOpacity(0.28),
-                height: 2.2,
-              ),
-              child: Text(_lyrics[i].text, textAlign: TextAlign.center),
-            ),
+      child: LayoutBuilder(
+        builder: (ctx, constraints) {
+          // 上下padding = 歌词区域一半高度，确保首尾歌词也能居中
+          final halfView = constraints.maxHeight / 2;
+          return ListView.builder(
+            controller: _lyricScrollCtrl,
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: halfView),
+            itemCount: _lyrics.length,
+            itemBuilder: (_, i) {
+              final active = i == _currentLyricIndex;
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 300),
+                  style: TextStyle(
+                    fontSize: active ? 22 : 16,
+                    fontWeight: active ? FontWeight.w600 : FontWeight.normal,
+                    color: active ? Colors.white.withOpacity(0.92) : Colors.white.withOpacity(0.28),
+                    height: 2.2,
+                  ),
+                  child: Text(_lyrics[i].text, textAlign: TextAlign.center),
+                ),
+              );
+            },
           );
         },
       ),
