@@ -4,6 +4,6 @@ import 'dj_controller.dart';
 class DjBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => DjController());
+    Get.lazyPut(() => DjController(), fenix: true);
   }
 }

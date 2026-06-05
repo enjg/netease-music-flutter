@@ -9,11 +9,11 @@ import '../account/account_controller.dart';
 class MainBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => MainController());
-    Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => PodcastController());
-    Get.lazyPut(() => MineController());
-    Get.lazyPut(() => FollowController());
-    Get.lazyPut(() => AccountController());
+    Get.lazyPut(() => MainController(), fenix: true);
+    Get.lazyPut(() => HomeController(), fenix: true);
+    Get.lazyPut(() => PodcastController(), fenix: true);
+    Get.lazyPut(() => MineController(), fenix: true);
+    Get.lazyPut(() => FollowController(), fenix: true);
+    Get.lazyPut(() => AccountController(), fenix: true);
   }
 }
