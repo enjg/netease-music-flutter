@@ -23,6 +23,7 @@ class PlayerService extends GetxService {
   final currentTime = 0.obs; // 秒
   final duration = 0.obs; // 秒
   final playMode = PlayMode.sequence.obs;
+  final playlistName = ''.obs;
 
   // 内部订阅
   StreamSubscription<Duration>? _positionSub;
