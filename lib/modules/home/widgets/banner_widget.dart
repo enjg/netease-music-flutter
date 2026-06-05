@@ -4,7 +4,8 @@ import '../../../data/models/banner_model.dart';
 
 class BannerWidget extends StatefulWidget {
   final List<BannerModel> banners;
-  const BannerWidget({super.key, required this.banners});
+  final void Function(BannerModel banner)? onBannerTap;
+  const BannerWidget({super.key, required this.banners, this.onBannerTap});
 
   @override
   State<BannerWidget> createState() => _BannerWidgetState();
@@ -31,57 +32,42 @@ class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.banners.isEmpty) return const SizedBox.shrink();
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: AspectRatio(
-              aspectRatio: 2 / 1,
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: widget.banners.length,
-                onPageChanged: (i) => setState(() => _current = i),
-                itemBuilder: (_, i) {
-                  final b = widget.banners[i];
-                  return Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.network('${b.pic}', fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(color: AppColors.surface)),
-                      Positioned(
-                        bottom: 8, right: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Text(b.typeTitle, style: const TextStyle(fontSize: 10, color: Colors.white)),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: AspectRatio(aspectRatio: 2 / 1,
+            child: PageView.builder(
+              controller: _controller,
+              itemCount: widget.banners.length,
+              onPageChanged: (i) => setState(() => _current = i),
+              itemBuilder: (_, i) {
+                final b = widget.banners[i];
+                return GestureDetector(
+                  onTap: () => widget.onBannerTap?.call(b),
+                  child: Stack(fit: StackFit.expand, children: [
+                    Image.network(b.pic, fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Container(color: AppColors.surface)),
+                    Positioned(bottom: 8, right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(color: Colors.black.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(6)),
+                        child: Text(b.typeTitle, style: const TextStyle(fontSize: 10, color: Colors.white)))),
+                  ]),
+                );
+              })),
         ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(widget.banners.length, (i) => Container(
-            width: i == _current ? 16 : 6,
-            height: 6,
-            margin: const EdgeInsets.symmetric(horizontal: 2),
-            decoration: BoxDecoration(
-              color: i == _current ? AppColors.accent : AppColors.textTertiary.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(3),
-            ),
-          )),
-        ),
-      ],
-    );
+      ),
+      const SizedBox(height: 10),
+      Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(widget.banners.length, (i) => Container(
+          width: i == _current ? 16 : 6, height: 6,
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          decoration: BoxDecoration(
+            color: i == _current ? AppColors.accent : AppColors.textTertiary.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(3))))),
+    ]);
   }
 }

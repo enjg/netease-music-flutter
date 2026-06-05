@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import '../../data/providers/recommend_provider.dart';
+import '../../data/providers/search_provider.dart';
 import '../../data/models/banner_model.dart';
 import '../../data/models/song_model.dart';
 
 class HomeController extends GetxController {
   final _provider = RecommendProvider();
+  final _searchProvider = SearchProvider();
 
   final banners = <BannerModel>[].obs;
   final playlists = <Map<String, dynamic>>[].obs;
@@ -12,6 +14,7 @@ class HomeController extends GetxController {
   final privateContent = <Map<String, dynamic>>[].obs;
   final djPrograms = <Map<String, dynamic>>[].obs;
   final isLoading = true.obs;
+  final defaultSearch = ''.obs;
 
   @override
   void onInit() {
@@ -28,6 +31,7 @@ class HomeController extends GetxController {
         loadNewSongs(),
         loadPrivateContent(),
         loadDjPrograms(),
+        loadDefaultSearch(),
       ]);
     } finally {
       isLoading.value = false;
@@ -52,5 +56,12 @@ class HomeController extends GetxController {
 
   Future<void> loadDjPrograms() async {
     try { djPrograms.assignAll(await _provider.getDjPrograms()); } catch (_) {}
+  }
+
+  Future<void> loadDefaultSearch() async {
+    try {
+      final data = await _searchProvider.getDefault();
+      defaultSearch.value = data['showKeyword'] ?? data['realkeyword'] ?? '';
+    } catch (_) {}
   }
 }
