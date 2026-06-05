@@ -61,9 +61,9 @@ class _GlobalOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Stack(
+    return Material(
+      color: AppColors.background,
+      child: Stack(
         children: [
           // 页面内容 - 全屏延伸，不加底部 padding
           Positioned.fill(child: child),
