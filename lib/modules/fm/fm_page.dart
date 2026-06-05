@@ -129,7 +129,7 @@ class FmPage extends GetView<FmController> {
                 // 垃圾桶
                 IconButton(
                   icon: const Icon(Icons.delete_outline_rounded, color: AppColors.textTertiary),
-                  onPressed: () {},
+                  onPressed: controller.trash,
                 ),
                 const SizedBox(height: 40),
               ],

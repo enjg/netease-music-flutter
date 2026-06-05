@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
 import '../../config/theme/app_text_styles.dart';
+import '../../app/routes.dart';
+import '../../shared/services/player_service.dart';
+import '../../data/models/song_model.dart';
 import 'search_controller.dart';
 
 class SearchPage extends GetView<SearchPageController> {
@@ -135,7 +138,13 @@ class SearchPage extends GetView<SearchPageController> {
         return ListTile(
           title: Text(song['name'] ?? '', style: const TextStyle(color: AppColors.textPrimary, fontSize: 14)),
           subtitle: Text(artists, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-          onTap: () {},
+          onTap: () {
+            final song = SongModel.fromJson(controller.searchResults[i]);
+            final player = Get.find<PlayerService>();
+            final songs = controller.searchResults.map((s) => SongModel.fromJson(s)).toList();
+            player.playSong(song, list: songs, index: i);
+            Get.toNamed(AppRoutes.player);
+          },
         );
       },
     );

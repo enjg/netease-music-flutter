@@ -29,4 +29,8 @@ class FmController extends GetxController {
   void togglePlay() => isPlaying.value = !isPlaying.value;
   void next() => loadFm();
   void toggleLike() => isLiked.value = !isLiked.value;
+  void trash() {
+    // 不喜欢 → 跳到下一首
+    next();
+  }
 }
