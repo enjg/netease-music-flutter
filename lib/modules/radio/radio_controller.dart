@@ -20,17 +20,17 @@ class RadioController extends GetxController {
 
   Future<void> loadCategories() async {
     try {
-      final r = await _client.get('/dj/category/list');
+      final r = await _client.get('/dj/catelist');
       categories.assignAll((r.data['categories'] ?? []).cast<Map<String, dynamic>>());
     } catch (_) {}
   }
 
   Future<void> loadRadios({int? typeId}) async {
     try {
-      final r = await _client.get('/dj/recommend', queryParameters: {
+      final r = await _client.get('/dj/hot', queryParameters: {
         if (typeId != null) 'type': typeId,
       });
-      radios.assignAll((r.data['djRadios'] ?? []).cast<Map<String, dynamic>>());
+      radios.assignAll((r.data['djRadios'] ?? r.data['data'] ?? []).cast<Map<String, dynamic>>());
     } catch (_) {}
   }
 
