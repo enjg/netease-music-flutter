@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import 'charts_controller.dart';
 
@@ -22,7 +23,7 @@ class ChartsPage extends GetView<ChartsController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+          return const ChartSkeleton();
         }
         return RefreshIndicator(
           color: AppColors.accent,

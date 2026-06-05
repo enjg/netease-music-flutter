@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import '../../shared/services/player_service.dart';
@@ -11,7 +12,7 @@ class ArtistPage extends GetView<ArtistController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: AppColors.background, body: Obx(() {
-      if (controller.isLoading.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+      if (controller.isLoading.value) return const DetailSkeleton();
       final d = controller.detail.value;
       return DefaultTabController(length: 4, child: CustomScrollView(slivers: [
         SliverAppBar(expandedHeight: 280, pinned: true, backgroundColor: AppColors.background,

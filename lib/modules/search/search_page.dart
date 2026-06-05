@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../app/routes.dart';
 import '../../shared/services/player_service.dart';
@@ -37,7 +38,7 @@ class SearchPage extends GetView<SearchPageController> {
       body: Obx(() {
         if (controller.isSearching.value) {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+            return const SearchSkeleton();
           }
           return _buildResults();
         }

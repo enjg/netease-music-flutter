@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import 'live_controller.dart';
@@ -27,7 +28,7 @@ class LivePage extends GetView<LiveController> {
         )),
         // 列表
         Expanded(child: Obx(() {
-          if (controller.isLoading.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+          if (controller.isLoading.value) return const ListSkeleton();
           final filtered = controller.currentCat.value == 'all'
               ? controller.channels
               : controller.channels.where((c) => (c['name'] ?? '').contains(_catMap[controller.currentCat.value] ?? '')).toList();

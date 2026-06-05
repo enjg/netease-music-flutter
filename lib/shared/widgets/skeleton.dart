@@ -230,3 +230,167 @@ class PodcastSkeleton extends StatelessWidget {
     child: Skeleton(width: 80, height: 20),
   );
 }
+
+
+/// 通用列表骨架屏（评论、消息、动态等）
+class ListSkeleton extends StatelessWidget {
+  final int itemCount;
+  final bool showAvatar;
+  const ListSkeleton({super.key, this.itemCount = 5, this.showAvatar = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: itemCount,
+      padding: const EdgeInsets.all(16),
+      itemBuilder: (_, __) => Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (showAvatar) ...[
+            const Skeleton(width: 40, height: 40, borderRadius: 20),
+            const SizedBox(width: 12),
+          ],
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+            Skeleton(width: 100, height: 14),
+            SizedBox(height: 8),
+            Skeleton(height: 12),
+            SizedBox(height: 4),
+            Skeleton(width: 200, height: 12),
+          ])),
+        ]),
+      ),
+    );
+  }
+}
+
+/// 通用网格骨架屏（歌单广场、风格等）
+class GridSkeleton extends StatelessWidget {
+  final int crossAxisCount;
+  final int itemCount;
+  const GridSkeleton({super.key, this.crossAxisCount = 3, this.itemCount = 6});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.all(16),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 0.85,
+      ),
+      itemCount: itemCount,
+      itemBuilder: (_, __) => Column(children: const [
+        Expanded(child: Skeleton(height: 120, borderRadius: 14)),
+        SizedBox(height: 6),
+        Skeleton(height: 12),
+      ]),
+    );
+  }
+}
+
+/// 详情页骨架屏（专辑、歌手、电台等）
+class DetailSkeleton extends StatelessWidget {
+  const DetailSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(children: [
+        // 封面
+        const Skeleton(height: 280, borderRadius: 0),
+        Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Skeleton(width: 200, height: 24),
+          const SizedBox(height: 8),
+          const Skeleton(width: 120, height: 14),
+          const SizedBox(height: 16),
+          // 操作栏
+          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: List.generate(4, (_) =>
+            Column(children: const [Skeleton(width: 44, height: 44, borderRadius: 22), SizedBox(height: 4), Skeleton(width: 30, height: 10)])
+          )),
+          const SizedBox(height: 20),
+          // 歌曲列表
+          ...List.generate(5, (_) => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Row(children: const [
+              Skeleton(width: 24, height: 16),
+              SizedBox(width: 12),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Skeleton(width: 160, height: 14),
+                SizedBox(height: 4),
+                Skeleton(width: 100, height: 10),
+              ])),
+            ]),
+          )),
+        ])),
+      ]),
+    );
+  }
+}
+
+/// 榜单骨架屏
+class ChartSkeleton extends StatelessWidget {
+  const ChartSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(padding: const EdgeInsets.fromLTRB(16, 16, 16, 12), child: const Skeleton(width: 80, height: 22)),
+        SizedBox(height: 180, child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: 3,
+          separatorBuilder: (_, __) => const SizedBox(width: 12),
+          itemBuilder: (_, __) => Column(children: const [
+            Skeleton(width: 140, height: 140, borderRadius: 14),
+            SizedBox(height: 6),
+            Skeleton(width: 140, height: 12),
+          ]),
+        )),
+        Padding(padding: const EdgeInsets.fromLTRB(16, 24, 16, 12), child: const Skeleton(width: 80, height: 22)),
+        ...List.generate(5, (_) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          child: Row(children: const [
+            Skeleton(width: 24, height: 18),
+            SizedBox(width: 12),
+            Skeleton(width: 44, height: 44, borderRadius: 8),
+            SizedBox(width: 12),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Skeleton(width: 140, height: 14),
+              SizedBox(height: 4),
+              Skeleton(width: 80, height: 10),
+            ])),
+          ]),
+        )),
+      ]),
+    );
+  }
+}
+
+/// 搜索结果骨架屏
+class SearchSkeleton extends StatelessWidget {
+  const SearchSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 6,
+      padding: const EdgeInsets.all(16),
+      itemBuilder: (_, __) => Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Row(children: const [
+          Skeleton(width: 48, height: 48, borderRadius: 8),
+          SizedBox(width: 12),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Skeleton(width: 180, height: 14),
+            SizedBox(height: 4),
+            Skeleton(width: 120, height: 10),
+          ])),
+        ]),
+      ),
+    );
+  }
+}

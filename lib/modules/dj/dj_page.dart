@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import 'dj_controller.dart';
@@ -24,7 +25,7 @@ class DjPage extends GetView<DjController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+          return const DetailSkeleton();
         }
         return RefreshIndicator(
           color: AppColors.accent,

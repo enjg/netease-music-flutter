@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import 'comments_controller.dart';
@@ -19,7 +20,7 @@ class CommentsPage extends GetView<CommentsController> {
         ])),
         // 列表
         Expanded(child: Obx(() {
-          if (controller.isLoading.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+          if (controller.isLoading.value) return const ListSkeleton();
           final list = controller.currentTab.value == 'hot' ? controller.hotComments : controller.newComments;
           if (list.isEmpty) return const Center(child: Text('暂无评论', style: TextStyle(color: AppColors.textTertiary)));
           return ListView.builder(itemCount: list.length, itemBuilder: (_, i) => _commentItem(list[i]));

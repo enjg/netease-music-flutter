@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../shared/services/player_service.dart';
 import 'style_controller.dart';
@@ -13,7 +14,7 @@ class StylePage extends GetView<StyleController> {
       backgroundColor: AppColors.background,
       appBar: AppBar(title: Obx(() => Text(controller.selectedTagId.value > 0 ? '风格详情' : '风格'))),
       body: Obx(() {
-        if (controller.isLoading.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+        if (controller.isLoading.value) return const GridSkeleton();
         if (controller.selectedTagId.value > 0) return _buildDetail();
         return _buildHome();
       }),

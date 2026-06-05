@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import '../../shared/services/player_service.dart';
@@ -19,7 +20,7 @@ class PlaylistPage extends GetView<PlaylistController> {
       backgroundColor: AppColors.background,
       appBar: AppBar(title: const Text('歌单广场')),
       body: Obx(() {
-        if (controller.isLoadingSquare.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+        if (controller.isLoadingSquare.value) return const DetailSkeleton();
         return CustomScrollView(slivers: [
           // 分类标签
           SliverToBoxAdapter(child: SizedBox(
@@ -109,7 +110,7 @@ class PlaylistPage extends GetView<PlaylistController> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Obx(() {
-        if (controller.isLoadingDetail.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+        if (controller.isLoadingDetail.value) return const DetailSkeleton();
         final d = controller.detail.value;
         final name = d['name'] ?? '';
         final cover = d['coverImgUrl'] ?? '';

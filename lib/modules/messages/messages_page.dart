@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/theme/app_colors.dart';
+import '../../shared/widgets/skeleton.dart';
 import '../../config/theme/app_text_styles.dart';
 import '../../core/utils/formatters.dart';
 import 'messages_controller.dart';
@@ -13,7 +14,7 @@ class MessagesPage extends GetView<MessagesController> {
       backgroundColor: AppColors.background,
       appBar: AppBar(title: const Text('消息')),
       body: Obx(() {
-        if (controller.isLoading.value) return const Center(child: CircularProgressIndicator(color: AppColors.accent));
+        if (controller.isLoading.value) return const ListSkeleton();
         return SingleChildScrollView(child: Column(children: [
           // 入口网格
           Container(
