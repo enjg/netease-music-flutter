@@ -12,7 +12,7 @@ class QuickEntries extends StatelessWidget {
   Widget build(BuildContext context) {
     final entries = [
       _Entry(Icons.radio_rounded, '私人FM', AppRoutes.fm),
-      _Entry(Icons.library_music_rounded, '歌单', AppRoutes.playlistDetail),
+      _Entry(Icons.library_music_rounded, '歌单', AppRoutes.playlistSquare),
       _Entry(Icons.leaderboard_rounded, '排行榜', AppRoutes.charts),
       _Entry(Icons.mic_rounded, '歌手', AppRoutes.artistDetail),
       _Entry(Icons.palette_rounded, '风格', AppRoutes.style),

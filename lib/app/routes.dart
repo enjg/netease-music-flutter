@@ -39,6 +39,16 @@ import '../modules/mv/mv_page.dart';
 import '../modules/mv/mv_binding.dart';
 import '../modules/dj/dj_page.dart';
 import '../modules/dj/dj_binding.dart';
+import '../modules/radio/radio_page.dart';
+import '../modules/radio/radio_binding.dart';
+import '../modules/video/video_page.dart';
+import '../modules/video/video_binding.dart';
+import '../modules/user_profile/user_profile_page.dart';
+import '../modules/user_profile/user_profile_binding.dart';
+import '../modules/vip/vip_page.dart';
+import '../modules/vip/vip_binding.dart';
+import '../modules/msg/msg_page.dart';
+import '../modules/msg/msg_binding.dart';
 
 /// 路由表
 class AppRoutes {
@@ -71,6 +81,11 @@ class AppRoutes {
   static const djDetail = '/dj/detail';
   static const djList = '/dj/list';
   static const commentList = '/comment/list';
+  static const radio = '/radio';
+  static const videoDetail = '/video/detail';
+  static const userProfile = '/user/profile';
+  static const vip = '/vip';
+  static const msg = '/msg';
 
   static final pages = <GetPage>[
     GetPage(name: splash, page: () => const SplashPage()),
@@ -96,5 +111,10 @@ class AppRoutes {
     GetPage(name: djDetail, page: () => const DjPage(), binding: DjBinding()),
     GetPage(name: djList, page: () => const DjPage(), binding: DjBinding()),
     GetPage(name: commentList, page: () => CommentPage(resourceId: 0, resourceType: 0)),
+    GetPage(name: radio, page: () => const RadioPage(), binding: RadioBinding()),
+    GetPage(name: videoDetail, page: () => const VideoPage(), binding: VideoBinding()),
+    GetPage(name: userProfile, page: () => const UserProfilePage(), binding: UserProfileBinding()),
+    GetPage(name: vip, page: () => const VipPage(), binding: VipBinding()),
+    GetPage(name: msg, page: () => const MsgPage(), binding: MsgBinding()),
   ];
 }

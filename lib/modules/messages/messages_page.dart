@@ -33,13 +33,15 @@ class MessagesPage extends GetView<MessagesController> {
           ...controller.privateMsgs.map((m) {
             final from = m['fromUser'] ?? {};
             final last = m['lastMsg'] ?? {};
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(children: [
-                CircleAvatar(radius: 24, backgroundColor: AppColors.surface,
-                  backgroundImage: from['avatarUrl'] != null ? NetworkImage('${from['avatarUrl']}?param=96x96') : null,
-                  child: from['avatarUrl'] == null ? const Icon(Icons.person, size: 24, color: AppColors.textTertiary) : null),
-                const SizedBox(width: 12),
+return GestureDetector(
+            onTap: () => Get.toNamed('/msg', arguments: {'uid': '${from['userId']}', 'nickname': from['nickname'] ?? ''}),
+            child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(children: [
+              CircleAvatar(radius: 24, backgroundColor: AppColors.surface,
+                backgroundImage: from['avatarUrl'] != null ? NetworkImage('${from['avatarUrl']}?param=96x96') : null,
+                child: from['avatarUrl'] == null ? const Icon(Icons.person, size: 24, color: AppColors.textTertiary) : null),
+              const SizedBox(width: 12),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(from['nickname'] ?? '', style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w500)),
                   const SizedBox(height: 2),
@@ -54,7 +56,8 @@ class MessagesPage extends GetView<MessagesController> {
                     child: Text('${m['newMsgCount']}', style: const TextStyle(fontSize: 10, color: Colors.white))),
                 ]),
               ]),
-            );
+            ),
+          );
           }),
           // 通知
           _sectionTitle('通知'),
