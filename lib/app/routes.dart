@@ -49,6 +49,8 @@ import '../modules/vip/vip_page.dart';
 import '../modules/vip/vip_binding.dart';
 import '../modules/msg/msg_page.dart';
 import '../modules/msg/msg_binding.dart';
+import '../modules/recent_play/recent_play_page.dart';
+import '../modules/recent_play/recent_play_binding.dart';
 
 /// 路由表
 class AppRoutes {
@@ -86,6 +88,7 @@ class AppRoutes {
   static const userProfile = '/user/profile';
   static const vip = '/vip';
   static const msg = '/msg';
+  static const recentPlay = '/recent/play';
 
   static final pages = <GetPage>[
     GetPage(name: splash, page: () => const SplashPage()),
@@ -116,5 +119,6 @@ class AppRoutes {
     GetPage(name: userProfile, page: () => const UserProfilePage(), binding: UserProfileBinding()),
     GetPage(name: vip, page: () => const VipPage(), binding: VipBinding()),
     GetPage(name: msg, page: () => const MsgPage(), binding: MsgBinding()),
+    GetPage(name: recentPlay, page: () => const RecentPlayPage(), binding: RecentPlayBinding()),
   ];
 }

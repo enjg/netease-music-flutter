@@ -84,7 +84,7 @@ class MinePage extends GetView<MineController> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _funcItem(Icons.access_time_rounded, '最近', () => Get.showSnackbar(GetSnackBar(message: '最近播放开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
+                _funcItem(Icons.access_time_rounded, '最近', () => Get.toNamed('/recent/play')),
                 _funcItem(Icons.download_rounded, '下载', () => Get.showSnackbar(GetSnackBar(message: '下载管理开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
                 _funcItem(Icons.cloud_rounded, '云盘', () => Get.showSnackbar(GetSnackBar(message: '云盘开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
                 _funcItem(Icons.favorite_border_rounded, '收藏', () => Get.showSnackbar(GetSnackBar(message: '收藏开发中', duration: const Duration(seconds: 1), backgroundColor: const Color(0xE6222222), margin: const EdgeInsets.all(16), borderRadius: 12))),
